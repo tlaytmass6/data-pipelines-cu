@@ -28,6 +28,8 @@ except ImportError:
 
 PAGENAMES = {"Google", "Amazon", "Apple", "Microsoft", "Facebook"}
 OUTPUT_DIR = "/Users/tlaytmass/stocksense/pageview_counts"
+OUTPUT_DIR = "/data/stocksense/pageview_counts"
+
 
 def _get_data(year, month, day, hour, output_path, **_):
     """Download Wikipedia pageviews for the given hour (templated op_kwargs)."""
@@ -105,6 +107,7 @@ def _add_to_db(**context):
     conn.close()
 
     print("Data successfully added to the database.")
+    """Add pageview counts to database. Implement this task."""
     pass
 
 
@@ -151,4 +154,5 @@ add_to_db = PythonOperator(
     dag=dag,
 )
 
+get_data >> extract_gz >> fetch_pageviews >> add_to_db
 get_data >> extract_gz >> fetch_pageviews >> add_to_db
